@@ -1,0 +1,398 @@
+:root{
+  --bg:#ffffff;
+  --fg:#111214;
+  --dim:#71767c;
+  --acc:#1a56db;
+  --acc-soft:#eef2ff;
+  --card:#f6f7f9;
+  --line:#e8eaee;
+  --line-soft:#f0f1f4;
+  --quote:#f4f5f7;
+  --radius:12px;
+  --radius-sm:8px;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html,body{
+  margin:0;padding:0;background:var(--bg);color:var(--fg);
+  font:16px/1.6 var(--sans);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+img,video{max-width:100%}
+a{color:var(--acc);text-decoration:none}
+a:hover{text-decoration:underline}
+::selection{background:var(--acc-soft)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+
+/* ---------- header ---------- */
+.site-header{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 24px;border-bottom:1px solid var(--line);
+  position:sticky;top:0;background:rgba(255,255,255,.86);
+  -webkit-backdrop-filter:saturate(180%) blur(12px);
+  backdrop-filter:saturate(180%) blur(12px);
+  z-index:10;
+}
+.logo{
+  font-weight:650;color:var(--fg);letter-spacing:-.02em;
+  display:inline-flex;align-items:center;gap:9px
+}
+.logo img{
+  width:20px;height:20px;flex:none;display:block
+}
+.site-header nav{display:flex;align-items:center;gap:16px;font-size:14px}
+.site-header nav a{color:var(--dim)}
+.site-header nav a:hover{color:var(--fg);text-decoration:none}
+
+/* стрелки-иконки в списках */
+.arrow{
+  width:20px;height:20px;flex:none;color:var(--dim);
+  display:inline-block;vertical-align:middle;
+  transition:transform .15s ease,color .15s ease
+}
+.arrow svg{
+  width:20px;height:20px;display:block;
+  fill:none;stroke:currentColor;stroke-width:1.9;
+  stroke-linecap:round;stroke-linejoin:round
+}
+.post-list a:hover .arrow,.channel-list a:hover .arrow{
+  color:var(--acc);transform:translateX(3px)
+}
+
+/* ---------- layout ---------- */
+main{max-width:860px;margin:0 auto;padding:40px 24px 8px}
+h1{
+  font-size:30px;line-height:1.25;margin:0 0 10px;
+  letter-spacing:-.025em;font-weight:680
+}
+.meta{
+  color:var(--dim);font-size:14px;margin:0 0 28px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px
+}
+.meta .dot{color:var(--line);font-size:12px}
+
+/* ---------- lists ---------- */
+.post-list,.channel-list,.channels-list{
+  list-style:none;padding:0;margin:0
+}
+.post-list li,.channel-list li{border-bottom:1px solid var(--line-soft)}
+.post-list li:last-child,.channel-list li:last-child{border-bottom:0}
+
+.post-list a,.channel-list a{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;
+  align-items:center;padding:15px 10px;color:var(--fg);
+  border-radius:var(--radius-sm);
+  transition:background .15s ease,transform .15s ease
+}
+.post-list a:hover,.channel-list a:hover{
+  background:var(--card);text-decoration:none
+}
+.post-list a:active,.channel-list a:active{transform:scale(.996)}
+
+/* ---------- аватар канала ---------- */
+.channel-list .avatar{
+  width:46px;height:46px;border-radius:50%;flex:none;
+  background:var(--card);border:1px solid var(--line);
+  overflow:hidden;display:block;position:relative
+}
+.channel-list .avatar img{
+  width:100%;height:100%;object-fit:cover;display:block
+}
+.channel-list .avatar img.is-hidden{display:none}
+.channel-list .avatar::after{
+  content:attr(data-letter);
+  position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:center;font-weight:600;font-size:18px;
+  color:var(--dim);text-transform:uppercase;z-index:-1
+}
+.channel-list .info{min-width:0;display:flex;flex-direction:column;gap:2px}
+.channel-list .name{
+  font-weight:600;letter-spacing:-.01em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
+.channel-list .handle{
+  color:var(--dim);font-size:13.5px;min-width:0;
+  display:flex;align-items:center;gap:6px
+}
+.channel-list .handle .u{
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
+.channel-list .handle .count{
+  flex:none;font-variant-numeric:tabular-nums;color:var(--dim);
+  font-size:12.5px;padding:1px 7px;background:var(--card);
+  border:1px solid var(--line);border-radius:20px;line-height:1.5
+}
+
+/* заголовок канала с аватаром */
+.channel-head{display:flex;align-items:center;gap:16px;margin:0 0 24px}
+.channel-head .avatar{
+  width:64px;height:64px;border-radius:50%;flex:none;
+  background:var(--card);border:1px solid var(--line);
+  overflow:hidden;display:block;position:relative
+}
+.channel-head .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.channel-head .avatar img.is-hidden{display:none}
+.channel-head .avatar::after{
+  content:attr(data-letter);
+  position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:center;font-weight:600;font-size:24px;
+  color:var(--dim);text-transform:uppercase;z-index:-1
+}
+.channel-head .info{min-width:0;display:flex;flex-direction:column;gap:3px}
+.channel-head .name{
+  font-size:20px;font-weight:650;letter-spacing:-.02em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
+.channel-head .handle{
+  color:var(--dim);font-size:14px;display:flex;align-items:center;gap:6px
+}
+.channel-head .handle .u{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.channel-head .handle .count{
+  flex:none;font-variant-numeric:tabular-nums;
+  font-size:12.5px;padding:1px 7px;background:var(--card);
+  border:1px solid var(--line);border-radius:20px;line-height:1.5
+}
+
+/* номер поста слева — без моно-шрифта и лишних меток */
+.cat{
+  color:var(--dim);font-size:13px;font-variant-numeric:tabular-nums;
+  min-width:26px;text-align:right;
+  font-family:inherit
+}
+.title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.empty{color:var(--dim);padding:24px 4px}
+
+/* ---------- post ---------- */
+.post-header{margin-bottom:28px}
+.post-header .cat{display:inline-block;min-width:0;margin-bottom:10px}
+.post-header h1{margin:0 0 10px}
+.post-header time{color:var(--dim);font-size:14px}
+.post-media{
+  display:grid;gap:8px;margin:28px 0;grid-template-columns:1fr
+}
+.post-media.n-2{grid-template-columns:1fr 1fr}
+.post-media.n-3,.post-media.n-4{grid-template-columns:1fr 1fr}
+.post-media img,.post-media video{
+  width:100%;height:auto;max-height:70vh;object-fit:contain;
+  border-radius:var(--radius);background:var(--card);display:block
+}
+.post-media video{grid-column:1/-1}
+.post-media .file{color:var(--acc);padding:10px 0;display:inline-block}
+
+/* ---------- post body (Telegram entities) ---------- */
+.post-body{
+  font-size:17px;line-height:1.65;word-wrap:break-word;overflow-wrap:anywhere;
+  white-space:normal
+}
+.post-body>*:first-child{margin-top:0}
+.post-body>*:last-child{margin-bottom:0}
+.post-body a{word-break:break-word}
+/* новые строки внутри абзацев сохраняются, служебные пробелы вокруг блоков — нет */
+.post-body br+br{display:block;content:""}
+.post-body blockquote,.post-body pre,.post-body ul,.post-body ol{margin-top:16px;margin-bottom:16px}
+
+.post-body b,.post-body strong{font-weight:680;color:var(--fg)}
+.post-body i,.post-body em{font-style:italic}
+.post-body u,.post-body ins{
+  text-decoration:underline;text-decoration-thickness:1px;
+  text-underline-offset:3px
+}
+.post-body s,.post-body strike,.post-body del{
+  text-decoration:line-through;color:var(--dim)
+}
+
+/* спойлеры телеграма */
+.post-body tg-spoiler,
+.post-body .spoiler{
+  background:var(--line);color:transparent;border-radius:5px;
+  padding:0 5px;cursor:pointer;transition:background .18s ease,color .18s ease
+}
+.post-body tg-spoiler:hover,.post-body tg-spoiler:focus,
+.post-body .spoiler:hover,.post-body .spoiler:focus{
+  color:inherit;background:var(--card)
+}
+
+/* код и pre */
+.post-body code{
+  background:var(--card);padding:2px 6px;border-radius:6px;
+  font-family:var(--mono);font-size:.9em;border:1px solid var(--line-soft)
+}
+.post-body pre{
+  background:var(--card);padding:14px 16px;border-radius:var(--radius);
+  overflow-x:auto;border:1px solid var(--line-soft);margin:16px 0;
+  font-family:var(--mono);font-size:.9em;line-height:1.55
+}
+.post-body pre code{background:none;padding:0;border:0;font-size:1em}
+
+/* цитаты */
+.post-body blockquote{
+  margin:16px 0;padding:10px 16px;background:var(--quote);
+  border-left:3px solid var(--acc);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  color:var(--dim)
+}
+.post-body blockquote a{color:var(--acc)}
+
+/* списки */
+.post-body ul,.post-body ol{margin:12px 0;padding-left:24px}
+.post-body li{margin:4px 0}
+
+/* разметка телеграм-виджета */
+.post-body .tgme_widget_message_text,
+.post-body .js-message_text{white-space:pre-wrap}
+
+/* упоминания, хэштеги, ссылки */
+.post-body a[href^="tg://"],.post-body .mention,
+.post-body .tgme_mention,.post-body .hashtag{font-weight:500}
+.post-body .hashtag,.post-body a[href^="/hashtag/"]{color:var(--acc)}
+
+.post-footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--line)}
+.post-footer a{color:var(--dim);font-size:14px}
+.post-footer a:hover{color:var(--acc);text-decoration:none}
+
+/* ---------- навигация между постами (prev / next) ---------- */
+.related-list{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  margin:36px 0 0;padding:18px 0 0;
+  border-top:1px solid var(--line);
+  list-style:none
+}
+.related-list .nav-link{
+  min-width:0;display:flex;align-items:center;gap:10px;
+  padding:10px 12px;color:var(--fg);border-radius:var(--radius-sm);
+  transition:background .15s ease
+}
+.related-list .nav-link:hover{background:var(--card);text-decoration:none}
+.related-list .nav-next{flex-direction:row-reverse;text-align:right}
+.related-list .nav-next .nav-text{align-items:flex-end}
+.related-list .nav-prev{grid-column:1}
+.related-list .nav-next{grid-column:2}
+.related-list .nav-arrow{
+  width:20px;height:20px;flex:none;color:var(--dim);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .15s ease,color .15s ease
+}
+.related-list .nav-arrow svg{
+  width:20px;height:20px;display:block;fill:none;stroke:currentColor;
+  stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round
+}
+.related-list .nav-link:hover .nav-arrow{color:var(--acc)}
+.related-list .nav-prev:hover .nav-arrow{transform:translateX(-3px)}
+.related-list .nav-next:hover .nav-arrow{transform:translateX(3px)}
+.related-list .nav-text{min-width:0;flex:1 1 0;display:flex;flex-direction:column;gap:2px;overflow:hidden}
+.related-list .nav-hint{
+  font-size:11px;color:var(--dim);text-transform:uppercase;
+  letter-spacing:.07em;font-weight:600
+}
+.related-list .nav-title{
+  display:block;max-width:100%;
+  font-size:14.5px;line-height:1.4;color:var(--fg);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
+.related-list .nav-link:hover .nav-title{color:var(--acc)}
+.related-list .nav-spacer{display:none}
+
+/* совместимость со старой разметкой <ul><li><a> */
+.related-list>li{flex:1 1 0;min-width:0;display:flex}
+.related-list>li>a{
+  min-width:0;width:100%;display:flex;align-items:center;gap:10px;
+  padding:10px 12px;color:var(--fg);border-radius:var(--radius-sm);
+  font-size:14.5px;line-height:1.4;
+  transition:background .15s ease
+}
+.related-list>li>a:hover{background:var(--card);text-decoration:none;color:var(--acc)}
+.related-list>li>a:last-child{flex-direction:row-reverse;text-align:right}
+
+/* ---------- другие каналы (как на главной: аватар + название + @name + посты) ---------- */
+.channels-list{margin:4px 0 0;padding:0}
+.channels-list li{border-bottom:1px solid var(--line-soft)}
+.channels-list li:last-child{border-bottom:0}
+.channels-list a{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;
+  align-items:center;color:var(--fg);
+  padding:10px 8px;border-radius:var(--radius-sm);
+  transition:background .15s ease
+}
+.channels-list a:hover{background:var(--card);text-decoration:none}
+.channels-list .avatar{
+  width:40px;height:40px;border-radius:50%;flex:none;
+  background:var(--card);border:1px solid var(--line);
+  overflow:hidden;display:block;position:relative
+}
+.channels-list .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.channels-list .avatar img.is-hidden{display:none}
+.channels-list .avatar::after{
+  content:attr(data-letter);
+  position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:center;font-weight:600;font-size:16px;
+  color:var(--dim);text-transform:uppercase;z-index:-1
+}
+.channels-list .info{min-width:0;display:flex;flex-direction:column;gap:2px}
+.channels-list .name{
+  font-weight:600;font-size:15px;letter-spacing:-.01em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
+.channels-list .handle{
+  color:var(--dim);font-size:13px;min-width:0;
+  display:flex;align-items:center;gap:6px
+}
+.channels-list .handle .u{
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
+.channels-list .handle .count{
+  flex:none;font-variant-numeric:tabular-nums;font-size:12px;
+  padding:1px 7px;background:var(--card);border:1px solid var(--line);
+  border-radius:20px;line-height:1.5
+}
+
+.other-channels{max-width:860px;margin:8px auto 0;padding:0 24px}
+.other-channels h3{
+  font-size:12px;color:var(--dim);font-weight:600;margin:28px 0 6px;
+  text-transform:uppercase;letter-spacing:.08em
+}
+
+/* ---------- footer ---------- */
+.site-footer{
+  max-width:860px;margin:56px auto 32px;padding:18px 24px 0;
+  color:var(--dim);font-size:13px;border-top:1px solid var(--line)
+}
+
+/* ---------- dark mode ---------- */
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0f1012;--fg:#ecedef;--dim:#8d9199;--acc:#7ea2ff;
+    --acc-soft:#1b2134;--card:#181a1e;--line:#26292f;--line-soft:#1f2227;
+    --quote:#17191d
+  }
+  .site-header{background:rgba(15,16,18,.86)}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:600px){
+  .site-header{padding:12px 16px}
+  main{padding:28px 16px 8px}
+  h1{font-size:23px}
+  .post-list a,.channel-list a{padding:13px 6px;gap:10px}
+  .channel-list .avatar{width:42px;height:42px}
+  .channel-head{gap:12px}
+  .channel-head .avatar{width:54px;height:54px}
+  .post-body{font-size:16.5px}
+  .post-media.n-2,.post-media.n-3,.post-media.n-4{grid-template-columns:1fr}
+  /* навигация по постам — в столбик */
+  .related-list{flex-direction:column;gap:4px}
+  .related-list .nav-next,.related-list>li>a:last-child{
+    flex-direction:row;text-align:left
+  }
+  .related-list .nav-next .nav-text{align-items:flex-start}
+  .related-list .nav-link,.related-list>li>a{padding:11px 12px}
+  .related-list .nav-spacer{display:none}
+  .channels-list .avatar{width:36px;height:36px}
+  .other-channels{padding:0 16px}
+  .site-footer{padding:16px 16px 0;margin-top:44px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
